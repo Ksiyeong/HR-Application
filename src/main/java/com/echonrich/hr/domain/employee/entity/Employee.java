@@ -3,14 +3,19 @@ package com.echonrich.hr.domain.employee.entity;
 import com.echonrich.hr.domain.department.entity.Department;
 import com.echonrich.hr.domain.job.entity.Job;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Entity(name = "employees")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +41,11 @@ public class Employee {
     @JoinColumn(name = "jobId", nullable = false)
     private Job job;
 
-    @Column(columnDefinition = "DECIMAL(8, 2)", nullable = false)
-    private Long salary;
+    @Column(nullable = false, precision = 8, scale = 2)
+    private BigDecimal salary;
 
-    @Column(columnDefinition = "DECIMAL(2, 2)")
-    private Long commissionPct;
+    @Column(precision = 2, scale = 2)
+    private BigDecimal commissionPct;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "managerId", referencedColumnName = "employeeId")
