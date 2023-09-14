@@ -2,12 +2,16 @@ package com.echonrich.hr.domain.location.entity;
 
 import com.echonrich.hr.domain.country.entity.Country;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "locations")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
