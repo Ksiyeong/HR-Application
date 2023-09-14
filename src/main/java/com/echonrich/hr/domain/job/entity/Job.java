@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity(name = "jobs")
 @Getter
 @NoArgsConstructor
@@ -17,9 +19,9 @@ public class Job {
     @Column(length = 35, nullable = false)
     private String jobTitle;
 
-    @Column(columnDefinition = "DECIMAL(8, 0) UNSIGNED")
-    private Long minSalary;
+    @Column(precision = 8, columnDefinition = "UNSIGNED")
+    private BigDecimal minSalary;
 
-    @Column(columnDefinition = "DECIMAL(8, 0) UNSIGNED")
-    private Long maxSalary;
+    @Column(precision = 8, columnDefinition = "UNSIGNED")
+    private BigDecimal maxSalary;
 }
