@@ -2,6 +2,7 @@ package com.echonrich.hr.domain.employee.dto;
 
 import com.echonrich.hr.domain.department.dto.DepartmentDto;
 import com.echonrich.hr.domain.job.dto.JobDto;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,13 +30,21 @@ public class EmployeeDto {
         private DepartmentDto.SimpleResponse department;
     }
 
-    @AllArgsConstructor
     @NoArgsConstructor
     @Getter
-    @Builder
     public static class SimpleResponse {
         private Long employeeId;
         private String firstName;
         private String lastName;
+
+        @Builder
+        @QueryProjection
+        public SimpleResponse(Long employeeId,
+                              String firstName,
+                              String lastName) {
+            this.employeeId = employeeId;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
     }
 }

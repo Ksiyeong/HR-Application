@@ -1,17 +1,23 @@
 package com.echonrich.hr.domain.job.dto;
 
-import lombok.AllArgsConstructor;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 public class JobDto {
-    @AllArgsConstructor
     @NoArgsConstructor
     @Getter
-    @Builder
     public static class SimpleResponse {
         private String jobId;
         private String jobTitle;
+
+        @Builder
+        @QueryProjection
+        public SimpleResponse(String jobId,
+                              String jobTitle) {
+            this.jobId = jobId;
+            this.jobTitle = jobTitle;
+        }
     }
 }
