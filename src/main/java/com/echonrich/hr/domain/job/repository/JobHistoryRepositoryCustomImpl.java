@@ -72,17 +72,12 @@ public class JobHistoryRepositoryCustomImpl implements JobHistoryRepositoryCusto
     }
 
     private Expression propertyToSortExpression(String property) {
-        switch (property) {
-            case "start_date":
-                return jobHistory.startDate;
-            case "end_date":
-                return jobHistory.endDate;
-            case "job_id":
-                return jobHistory.job.jobId;
-            case "department_id":
-                return jobHistory.department.departmentId;
-            default: // employee_id
-                return jobHistory.employee.employeeId;
-        }
+        return switch (property) {
+            case "start_date" -> jobHistory.startDate;
+            case "end_date" -> jobHistory.endDate;
+            case "job_id" -> jobHistory.job.jobId;
+            case "department_id" -> jobHistory.department.departmentId;
+            default -> jobHistory.employee.employeeId; // employee_id 및 기타 외에 다른값 들어오면 기본값으로 검색
+        };
     }
 }
