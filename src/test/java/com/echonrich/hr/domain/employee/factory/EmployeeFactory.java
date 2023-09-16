@@ -21,6 +21,8 @@ public class EmployeeFactory {
         Job job = Job.builder()
                 .jobId("SA_MAN")
                 .jobTitle("Sales Manager")
+                .minSalary(new BigDecimal("20000.00"))
+                .maxSalary(new BigDecimal("40000.00"))
                 .build();
         Employee employee = Employee.builder()
                 .employeeId(145L)
@@ -30,8 +32,8 @@ public class EmployeeFactory {
                 .phoneNumber("011.44.1344.429268")
                 .hireDate(Date.valueOf("1996-10-01"))
                 .job(job)
-                .salary(BigDecimal.valueOf(14000.00))
-                .commissionPct(BigDecimal.valueOf(0.40))
+                .salary(new BigDecimal("24000.00"))
+                .commissionPct(new BigDecimal("0.40"))
                 .manager(manager)
                 .department(department)
                 .build();
