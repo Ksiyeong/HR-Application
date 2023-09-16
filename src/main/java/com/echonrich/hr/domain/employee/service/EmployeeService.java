@@ -9,7 +9,7 @@ import java.util.List;
 public interface EmployeeService {
     EmployeeDto.Response findEmployee(long employeeId);
 
-    void updateSalaries(List<Employee> employees, BigDecimal rate);
+    void updateSalaryForEmployees(List<Employee> employees, BigDecimal rate);
 
     void updateSalary(long employeeId, BigDecimal rate);
 }
