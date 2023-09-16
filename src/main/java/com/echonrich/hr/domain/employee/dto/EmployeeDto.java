@@ -3,6 +3,7 @@ package com.echonrich.hr.domain.employee.dto;
 import com.echonrich.hr.domain.department.dto.DepartmentDto;
 import com.echonrich.hr.domain.job.dto.JobDto;
 import com.querydsl.core.annotations.QueryProjection;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,6 +54,7 @@ public class EmployeeDto {
     @Builder
     @Getter
     public static class SalaryRequest {
+        @NotNull
         private BigDecimal rate;
     }
 }
