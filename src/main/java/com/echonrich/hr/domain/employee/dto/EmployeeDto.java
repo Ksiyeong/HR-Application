@@ -47,4 +47,12 @@ public class EmployeeDto {
             this.lastName = lastName;
         }
     }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    @Getter
+    public static class SalaryRequest {
+        private BigDecimal rate;
+    }
 }
