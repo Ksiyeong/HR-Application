@@ -58,6 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     // 검증 로직
+    @Transactional(readOnly = true)
     private Employee findVerifiedEmployee(long employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new CustomLogicException(ExceptionCode.NOT_FOUND));
