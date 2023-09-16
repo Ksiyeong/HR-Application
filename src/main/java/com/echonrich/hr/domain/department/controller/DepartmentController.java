@@ -6,6 +6,7 @@ import com.echonrich.hr.domain.department.service.DepartmentService;
 import com.echonrich.hr.domain.employee.dto.EmployeeDto;
 import com.echonrich.hr.domain.employee.service.EmployeeService;
 import com.echonrich.hr.global.response.SingleResponse;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class DepartmentController {
 
     @PatchMapping("/{departmentId}/employees/salary")
     public ResponseEntity patchSalaryByDepartmentId(@PathVariable @Positive long departmentId,
-                                                    @RequestBody EmployeeDto.SalaryRequest requestBody) {
+                                                    @RequestBody @Valid EmployeeDto.SalaryRequest requestBody) {
         Department department = departmentService.findVerifiedDepartment(departmentId);
         employeeService.updateSalaryForEmployees(department.getEmployees(), requestBody.getRate());
         return ResponseEntity.noContent().build();
