@@ -25,7 +25,8 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     // 검증 로직
-    private Department findVerifiedDepartment(long departmentId) {
+    @Transactional(readOnly = true)
+    public Department findVerifiedDepartment(long departmentId) {
         return departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new CustomLogicException(ExceptionCode.NOT_FOUND));
     }
