@@ -34,7 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         BigDecimal minSalary = employee.getJob().getMinSalary();
 
         // 임금 계산
-        BigDecimal calculatedSalary = employee.getSalary().multiply(BigDecimal.ONE.add(rate));
+        BigDecimal calculatedSalary = employee.getSalary().multiply(BigDecimal.ONE.add(rate)).setScale(2, RoundingMode.UP);
 
         // 최저 급여 보다 작을 경우 최저로 설정
         if (calculatedSalary.compareTo(minSalary) < 0) {
@@ -46,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
             // 정상 범위일 경우 소수점 둘 째자리 까지 올림 처리
         } else {
-            employee.updateSalary(calculatedSalary.setScale(2, RoundingMode.UP));
+            employee.updateSalary(calculatedSalary);
         }
     }
 
