@@ -1,8 +1,13 @@
 package com.echonrich.hr.domain.department.controller;
 
 import com.echonrich.hr.domain.department.dto.DepartmentDto;
+import com.echonrich.hr.domain.department.entity.Department;
 import com.echonrich.hr.domain.department.factory.DepartmentDtoFactory;
+import com.echonrich.hr.domain.department.factory.DepartmentFactory;
 import com.echonrich.hr.domain.department.service.DepartmentService;
+import com.echonrich.hr.domain.employee.dto.EmployeeDto;
+import com.echonrich.hr.domain.employee.service.EmployeeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +18,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.ArgumentMatchers.anyLong;
+import java.math.BigDecimal;
+
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,8 +33,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class DepartmentControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
     @MockBean
     private DepartmentService departmentService;
+    @MockBean
+    private EmployeeService employeeService;
 
     @Test
     @DisplayName("getDepartment - 성공")
@@ -78,4 +91,79 @@ class DepartmentControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Test
+    @DisplayName("patchSalaryByDepartmentId - 성공")
+    void patchSalaryByDepartmentId() throws Exception {
+        // given
+        Department department = DepartmentFactory.createDepartment();
+        Long departmentId = department.getDepartmentId();
+
+        EmployeeDto.SalaryRequest requestBody = EmployeeDto.SalaryRequest.builder()
+                .rate(new BigDecimal("0.01"))
+                .build();
+
+        given(departmentService.findVerifiedDepartment(anyLong())).willReturn(department);
+        doNothing().when(employeeService).updateSalaryForEmployees(anyList(), any());
+
+        String content = objectMapper.writeValueAsString(requestBody);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/v1/departments/{departmentId}/employees/salary", departmentId)
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("patchSalaryByDepartmentId - id값이 0이하인 경우")
+    void patchSalaryByDepartmentId_id_0() throws Exception {
+        // given
+        Long departmentId = 0L;
+
+        EmployeeDto.SalaryRequest requestBody = EmployeeDto.SalaryRequest.builder()
+                .rate(new BigDecimal("0.01"))
+                .build();
+
+        String content = objectMapper.writeValueAsString(requestBody);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/v1/departments/{departmentId}/employees/salary", departmentId)
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("patchSalaryByDepartmentId - rate : null")
+    void patchSalaryByDepartmentId_rate_null() throws Exception {
+        // given
+        Long departmentId = 1L;
+
+        EmployeeDto.SalaryRequest requestBody = EmployeeDto.SalaryRequest.builder()
+                .rate(null)
+                .build();
+
+        String content = objectMapper.writeValueAsString(requestBody);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/v1/departments/{departmentId}/employees/salary", departmentId)
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest());
+    }
 }
