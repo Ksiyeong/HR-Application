@@ -52,8 +52,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void updateSalaryForEmployees(List<Employee> employees, BigDecimal rate) {
-        for (Employee employee : employees) {
-            updateSalary(employee.getEmployeeId(), rate);
+        if (employees != null) {
+            for (Employee employee : employees) {
+                updateSalary(employee.getEmployeeId(), rate);
+            }
         }
     }
 
