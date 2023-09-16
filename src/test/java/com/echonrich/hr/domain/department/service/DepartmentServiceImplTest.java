@@ -67,4 +67,36 @@ class DepartmentServiceImplTest {
         verify(departmentRepository, times(1)).findById(anyLong());
         verify(departmentMapper, never()).toDepartmentResponseDto(any());
     }
+
+    @Test
+    @DisplayName("findVerifiedDepartment - 성공")
+    void findVerifiedDepartment() {
+        // given
+        Department expected = DepartmentFactory.createDepartment();
+        Long departmentId = expected.getDepartmentId();
+
+        given(departmentRepository.findById(anyLong())).willReturn(Optional.ofNullable(expected));
+
+        // when
+        Department actual = departmentService.findVerifiedDepartment(departmentId);
+
+        // then
+        verify(departmentRepository, times(1)).findById(anyLong());
+        assertSame(expected, actual);
+    }
+
+    @Test
+    @DisplayName("findVerifiedDepartment - NOT_FOUND")
+    void findVerifiedDepartment_NOT_FOUND() {
+        // given
+        long departmentId = 10L;
+
+        given(departmentRepository.findById(anyLong())).willReturn(Optional.empty());
+
+        // when
+        // then
+        CustomLogicException thrown = assertThrows(CustomLogicException.class, () -> departmentService.findVerifiedDepartment(departmentId));
+        assertEquals(ExceptionCode.NOT_FOUND.getMessage(), thrown.getMessage());
+        verify(departmentRepository, times(1)).findById(anyLong());
+    }
 }
