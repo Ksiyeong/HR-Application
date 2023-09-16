@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity(name = "departments")
 @Getter
 @NoArgsConstructor
@@ -29,4 +31,7 @@ public class Department {
     @ManyToOne
     @JoinColumn(name = "locationId", nullable = false)
     private Location location;
+
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees;
 }
