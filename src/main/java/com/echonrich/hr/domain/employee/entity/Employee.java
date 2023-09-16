@@ -54,4 +54,11 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "departmentId")
     private Department department;
+
+    public void updateSalary(BigDecimal salary) {
+        if (salary == null) {
+            return;
+        }
+        this.salary = salary;
+    }
 }
