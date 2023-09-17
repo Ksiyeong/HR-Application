@@ -1,4 +1,4 @@
-= HR API 문서
+= HR - Application API 문서
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -6,31 +6,82 @@
 :toclevels: 2
 :sectlinks:
 
-[[JobHistory-API]]
-== JobHistory API
+*제작자* : Kim siyeong
 
-[[JobHistory-검색]]
-=== JobHistory 검색
+*메일* : philip2767@gmail.com
 
-operation::getJobHistories[snippets='http-request,query-parameters,http-response,response-fields']
+*깃허브* : https://github.com/Ksiyeong/HR-Application
 
-[[Department-API]]
+기타 궁금한 사항은 메일로 문의 해주세요.
+
+***
+
 == Department API
 
-[[부서-정보-단건-조회]]
 === 부서 정보 단건 조회
 
 operation::getDepartment[snippets='http-request,path-parameters,http-response,response-fields']
 
-[[부서별-직원-급여-인상]]
+==== Error
+
+|===
+| Status | Description
+
+| `400 Bad Request`
+| departmentId 값이 잘못되었을 경우
+
+| `404 Not Found`
+| 요청한 department가 존재하지 않을 경우
+|===
+
 === 부서별 직원 급여 인상
+
+소수점 셋째자리에서 올림 처리됩니다.
 
 operation::patchSalaryByDepartmentId[snippets='http-request,path-parameters,request-fields,request-body,http-response']
 
-[[Employee-API]]
+==== Error
+
+|===
+| Status | Description
+
+| `400 Bad Request`
+| departmentId 값이 잘못되었을 경우, rate가 null인 경우
+
+| `404 Not Found`
+| 요청한 department가 존재하지 않을 경우
+|===
+
 == Employee API
 
 [[특정-직원-정보-조회]]
 === 특정 직원 정보 조회
 
 operation::getEmployee[snippets='http-request,path-parameters,http-response,response-fields']
+
+==== Error
+
+|===
+| Status | Description
+
+| `400 Bad Request`
+| employeeId 값이 잘못되었을 경우
+
+| `404 Not Found`
+| 요청한 employee가 존재하지 않을 경우
+|===
+
+== JobHistory API
+
+=== JobHistory 검색
+
+operation::getJobHistories[snippets='http-request,query-parameters,http-response,response-fields']
+
+==== Error
+
+|===
+| Status | Description
+
+| `400 Bad Request`
+| employee_id, department_id, start_date, end_date, page, size 값이 올바르지 않은 경우
+|===
