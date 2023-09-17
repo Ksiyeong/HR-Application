@@ -3,6 +3,7 @@ package com.echonrich.hr.infrastructure.arirang.controller;
 import com.echonrich.hr.global.response.PageResponse;
 import com.echonrich.hr.infrastructure.arirang.client.ArirangClient;
 import com.echonrich.hr.infrastructure.arirang.dto.ArirangItemsResponseDto;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,9 @@ public class ArirangController {
     private final ArirangClient arirangClient;
 
     @GetMapping("/news")
-    public ResponseEntity getArirangNews(@RequestParam(defaultValue = "1") int page,
-                                         @RequestParam(defaultValue = "10") int size) {
-        Page<ArirangItemsResponseDto> arirangNews = arirangClient.findArirangNews(page, size);
+    public ResponseEntity getArirangNews(@RequestParam(defaultValue = "1") @Min(1) int page,
+                                         @RequestParam(defaultValue = "10") @Min(1) int size) {
+        Page<ArirangItemsResponseDto> arirangNews = arirangClient.findArirangNews(page - 1, size);
         return ResponseEntity.ok(new PageResponse<>(arirangNews));
     }
 

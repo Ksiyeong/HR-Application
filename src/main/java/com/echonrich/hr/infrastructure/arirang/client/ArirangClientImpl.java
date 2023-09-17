@@ -39,6 +39,6 @@ public class ArirangClientImpl implements ArirangClient {
                 .bodyToMono(ArirangResponseDto.class)
                 .block();
 
-        return new PageImpl<>(arirangResponseDto.getItems(), PageRequest.of(page - 1, size), arirangResponseDto.getTotalCount());
+        return new PageImpl<>(arirangResponseDto.getItems(), PageRequest.of(page, size), arirangResponseDto.getTotalCount());
     }
 }
