@@ -4,7 +4,7 @@
 {{#parameters}}
 |{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
 |{{#type}}{{.}}{{/type}}
-|{{^optional}}true{{/optional}}
+|{{#optional}}false{{/optional}}{{^optional}}true{{/optional}}
 |{{#default}}{{.}}{{/default}}
 |{{#constraints}}{{.}}{{/constraints}}
 |{{#tableCellContent}}{{description}}{{/tableCellContent}}
