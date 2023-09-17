@@ -164,7 +164,7 @@ class JobHistoryControllerTest {
     }
 
     @Test
-    @DisplayName("getJobHistories - employee_id가 0 이하인 경우")
+    @DisplayName("getJobHistories - department_id가 0 이하인 경우")
     void getJobHistories_department_id_0() throws Exception {
         // given
         Long department_id = 0L;
@@ -186,7 +186,7 @@ class JobHistoryControllerTest {
     }
 
     @Test
-    @DisplayName("getJobHistories - employee_id가 4294967296 이상인 경우")
+    @DisplayName("getJobHistories - department_id가 4294967296 이상인 경우")
     void getJobHistories_department_id_4294967296() throws Exception {
         // given
         Long department_id = 4294967296L;
