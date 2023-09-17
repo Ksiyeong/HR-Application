@@ -75,10 +75,12 @@ class JobHistoryControllerTest {
                                 parameterWithName("employee_id").description("직원 식별자").optional()
                                         .attributes(key("constraints").value("1이상 4294967295이하"))
                                         .attributes(key("type").value("Number")),
-                                parameterWithName("start_date").description("직책 시작 날짜(yyyy-MM-dd)").optional()
-                                        .attributes(key("type").value("String")),
-                                parameterWithName("end_date").description("직책 종료 날짜(yyyy-MM-dd)").optional()
-                                        .attributes(key("type").value("String")),
+                                parameterWithName("start_date").description("직책 시작 날짜").optional()
+                                        .attributes(key("type").value("String"))
+                                        .attributes(key("constraints").value("yyyy-MM-dd")),
+                                parameterWithName("end_date").description("직책 종료 날짜").optional()
+                                        .attributes(key("type").value("String"))
+                                        .attributes(key("constraints").value("yyyy-MM-dd")),
                                 parameterWithName("job_id").description("직책 식별자").optional()
                                         .attributes(key("type").value("String")),
                                 parameterWithName("department_id").description("부서 식별자").optional()
@@ -243,6 +245,42 @@ class JobHistoryControllerTest {
                         .param("employee_id", String.valueOf(employee_id))
                         .param("page", String.valueOf(page))
                         .param("size", String.valueOf(size))
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("getJobHistories - 잘못된 start_date")
+    void getJobHistories_start_date_wrong() throws Exception {
+        // given
+        String start_date = "1997-05-33";
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/v1/job-histories")
+                        .param("start_date", start_date)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("getJobHistories - 잘못된 end_date")
+    void getJobHistories_end_date_wrong() throws Exception {
+        // given
+        String end_date = "1997-15-23";
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/v1/job-histories")
+                        .param("end_date", end_date)
                         .accept(MediaType.APPLICATION_JSON)
         );
 
