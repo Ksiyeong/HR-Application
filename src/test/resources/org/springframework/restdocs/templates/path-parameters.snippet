@@ -1,0 +1,12 @@
+.+{{path}}+
+|===
+|Parameter|Type|Constraints|Description
+
+{{#parameters}}
+|{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
+|{{#type}}{{.}}{{/type}}
+|{{#constraints}}{{.}}{{/constraints}}
+|{{#tableCellContent}}{{description}}{{/tableCellContent}}
+
+{{/parameters}}
+|===
