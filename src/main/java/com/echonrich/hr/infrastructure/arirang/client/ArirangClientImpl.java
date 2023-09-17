@@ -19,13 +19,13 @@ import java.net.URI;
 public class ArirangClientImpl implements ArirangClient {
     private final WebClient webClient;
     @Value("${infrastructure.arirang.service-key}")
-    private String enCodedArirangServiceKey;
+    private String ENCODED_ARIRANG_SERVICE_KEY;
 
     @Override
     public Page<ArirangItemsResponseDto> findArirangNews(int page, int size) {
         URI uri = UriComponentsBuilder
                 .fromUriString("https://apis.data.go.kr/B551024/openArirangNewsApi/news")
-                .queryParam("serviceKey", enCodedArirangServiceKey)
+                .queryParam("serviceKey", ENCODED_ARIRANG_SERVICE_KEY)
                 .queryParam("pageNo", page)
                 .queryParam("numOfRows", size)
                 .build(true)
