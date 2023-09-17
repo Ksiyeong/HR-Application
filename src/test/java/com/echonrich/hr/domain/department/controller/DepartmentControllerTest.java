@@ -191,6 +191,30 @@ class DepartmentControllerTest {
     }
 
     @Test
+    @DisplayName("patchSalaryByDepartmentId - id값이 4294967296 이상인 경우")
+    void patchSalaryByDepartmentId_id_4294967296() throws Exception {
+        // given
+        Long departmentId = 4294967296L;
+
+        EmployeeDto.SalaryRequest requestBody = EmployeeDto.SalaryRequest.builder()
+                .rate(new BigDecimal("0.01"))
+                .build();
+
+        String content = objectMapper.writeValueAsString(requestBody);
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                patch("/api/v1/departments/{departmentId}/employees/salary", departmentId)
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     @DisplayName("patchSalaryByDepartmentId - rate : null")
     void patchSalaryByDepartmentId_rate_null() throws Exception {
         // given
