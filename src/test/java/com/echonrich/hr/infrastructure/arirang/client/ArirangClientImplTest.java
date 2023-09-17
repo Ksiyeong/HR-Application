@@ -23,7 +23,7 @@ class ArirangClientImplTest {
         Page<ArirangItemsResponseDto> arirangNews = arirangClient.findArirangNews(page, size);
 
         // then
-        assertEquals(page - 1, arirangNews.getNumber());
+        assertEquals(page, arirangNews.getNumber());
         assertEquals(size, arirangNews.getSize());
     }
 }
