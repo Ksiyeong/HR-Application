@@ -85,3 +85,9 @@ operation::getJobHistories[snippets='http-request,query-parameters,http-response
 | `400 Bad Request`
 | employee_id, department_id, start_date, end_date, page, size 값이 올바르지 않은 경우
 |===
+
+== ArirangNews API
+
+=== 아리랑 뉴스 불러오기
+
+operation::getArirangNews[snippets='http-request,query-parameters,http-response,response-fields']
