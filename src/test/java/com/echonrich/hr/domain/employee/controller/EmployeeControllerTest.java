@@ -117,4 +117,21 @@ class EmployeeControllerTest {
         actions
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    @DisplayName("getEmployee - id값이 4294967296 이상인 경우")
+    void getEmployee_id_4294967296() throws Exception {
+        // given
+        long employeeId = 4294967296L;
+
+        // when
+        ResultActions actions = mockMvc.perform(
+                get("/api/v1/employees/{employeeId}", employeeId)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        actions
+                .andExpect(status().isBadRequest());
+    }
 }
