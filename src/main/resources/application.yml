@@ -11,11 +11,11 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update
-    show-sql: true
+      ddl-auto: none
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
 
   sql:
     init:
@@ -26,11 +26,11 @@ logging:
     org:
       springframework:
         orm:
-          jpa: DEBUG
+          jpa: ERROR
         web:
           reactive:
             function:
-              client: DEBUG
+              client: ERROR
 
 server:
   servlet:
